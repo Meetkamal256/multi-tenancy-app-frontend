@@ -1,29 +1,30 @@
 import React, { useState } from "react";
 import styles from "./tenantTable.module.css";
 import { tenantsData } from "@/app/data";
-import Pagination from "../pagination/Pagination";
-
-
-interface Tenant {
-  id: number;
-  name: string;
-  creationDate: string;
-  active: boolean;
-}
+import TenantModal from "../tenantModal/TenantModal";
+import { Tenant } from "@/app/types";
+import Pagination from "../pagination/Pagination"; 
 
 const TenantTable = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterStatus, setFilterStatus] = useState<string>("All");
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-
-  // const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setSearchQuery(e.target.value);
-  // };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [tenantToEdit, setTenantToEdit] = useState<Tenant | undefined>(
+    undefined
+  );
   
-  // const handleStatusFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   setFilterStatus(e.target.value);
-  // };
+  const [currentPage, setCurrentPage] = useState(1); 
+  const itemsPerPage = 10; 
+  
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+     setSearchQuery(e.target.value);
+     setCurrentPage(1);
+  };
+  
+  const handleStatusFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
+     setFilterStatus(e.target.value);
+     setCurrentPage(1);
+  };
   
   const filteredTenants = tenantsData.filter((tenant) => {
     const matchesSearch = tenant.name
@@ -37,12 +38,28 @@ const TenantTable = () => {
     return matchesSearch && matchesStatus;
   });
   
-  
-  const currentTenants = filteredTenants.slice(
+  // Slice tenants based on the current page
+  const paginatedTenants = filteredTenants.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
   
+  const openModal = (tenant?: Tenant) => {
+    setTenantToEdit(tenant);
+    setIsModalOpen(true);
+  };
+  
+  const closeModal = () => {
+    setIsModalOpen(false); 
+  };
+  
+  const handleModalSubmit = (tenant: Tenant) => {
+    
+    console.log(tenant); 
+    closeModal();
+  };
+  
+  // Handle page change
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
@@ -56,25 +73,19 @@ const TenantTable = () => {
             className={styles.searchInput}
             placeholder="Search tenants"
             value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              setCurrentPage(1);
-            }}
+            onChange={handleSearch}
           />
           <select
             className={styles.filterSelect}
             value={filterStatus}
-            onChange={(e) => {
-              setFilterStatus(e.target.value);
-              setCurrentPage(1);
-            }}
+            onChange={handleStatusFilter}
           >
             <option value="All">All</option>
             <option value="Active">Active</option>
             <option value="Inactive">Inactive</option>
           </select>
         </div>
-
+        
         <div className={styles.tableWrapper}>
           <table className={styles.tenantTable}>
             <thead>
@@ -86,13 +97,18 @@ const TenantTable = () => {
               </tr>
             </thead>
             <tbody>
-              {currentTenants.map((tenant) => (
+              {paginatedTenants.map((tenant) => (
                 <tr key={tenant.id}>
                   <td>{tenant.name}</td>
                   <td>{tenant.creationDate}</td>
                   <td>{tenant.active ? "Active" : "Inactive"}</td>
                   <td>
-                    <button className={styles.editBtn}>Edit</button>
+                    <button
+                      className={styles.editBtn}
+                      onClick={() => openModal(tenant)}
+                    >
+                      Edit
+                    </button>
                     <button className={styles.deleteBtn}>Delete</button>
                   </td>
                 </tr>
@@ -100,14 +116,21 @@ const TenantTable = () => {
             </tbody>
           </table>
         </div>
-
-        <Pagination
-          totalItems={filteredTenants.length}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        />
       </div>
+      
+      <Pagination
+        totalItems={filteredTenants.length}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
+      
+      <TenantModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onSubmit={handleModalSubmit}
+        tenantToEdit={tenantToEdit}
+      />
     </div>
   );
 };
