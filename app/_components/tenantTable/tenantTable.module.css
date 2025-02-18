@@ -94,3 +94,62 @@
 }
 
 
+/* Responsive Design */
+@media (max-width: 768px) {
+  .searchAndFilter {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .searchInput {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .filterSelect {
+    width: 100%;
+  }
+  
+  .tenantTable th,
+  .tenantTable td {
+    padding: 8px;
+  }
+  
+  .tenantTable {
+    font-size: 14px;
+  }
+  
+  .editBtn,
+  .deleteBtn {
+    padding: 4px 8px;
+    font-size: 12px;
+    margin-right: 4px;
+  }
+}
+
+@media (max-width: 600px) {
+  .searchInput {
+    width: 100%;
+    padding: 8px;
+  }
+  
+  .filterSelect {
+    width: 100%;
+    padding: 8px;
+  }
+  
+  .tenantTable th,
+  .tenantTable td {
+    padding: 0px;
+  }
+  
+  .tenantTable {
+    font-size: 12px;
+  }
+  
+  .editBtn,
+  .deleteBtn {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}
