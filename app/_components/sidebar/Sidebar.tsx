@@ -15,7 +15,7 @@ const Sidebar = () => {
         <div className={styles.logo}>
           <h2>SaaS Admin</h2>
         </div>
-
+        
         <ul className={styles.menu}>
           <li>
             <a href="#" className={styles.menuItem}>
@@ -23,12 +23,12 @@ const Sidebar = () => {
             </a>
           </li>
           <li>
-            <a href="#" className={styles.menuItem}>
+            <a href="/tenants" className={styles.menuItem}>
               <FaUsers className={styles.icon} /> Tenants
             </a>
           </li>
           <li>
-            <a href="#" className={styles.menuItem}>
+            <a href="/analytics" className={styles.menuItem}>
               <FaChartBar className={styles.icon} /> Analytics
             </a>
           </li>

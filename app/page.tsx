@@ -6,7 +6,7 @@ import TenantTable from "./_components/tenantTable/TenantTable";
 export default function Home() {
   return (
     <>
-    <TenantTable />
+  
     </>
   );
 }

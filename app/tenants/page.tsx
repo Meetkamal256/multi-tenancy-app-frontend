@@ -1,9 +1,11 @@
-import React from 'react'
+"use client";
+import TenantTable from "../_components/tenantTable/TenantTable";
+import styles from "./tenants.module.css"
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
-}
+const tenantsPage = () => {
+  return <div className={styles.container}>
+  <   TenantTable />
+  </div>;
+};
 
-export default page
+export default tenantsPage;
