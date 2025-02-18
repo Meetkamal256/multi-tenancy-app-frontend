@@ -1,0 +1,96 @@
+.container {
+  padding: 50px 10px 20px 10px;
+  background-color: #f8f9fa;
+}
+
+.tableContainer {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.searchAndFilter {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.searchInput {
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.filterSelect {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+.tenantTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.tenantTable th,
+.tenantTable td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.tenantTable th {
+  background-color: #f1f1f1;
+  font-weight: bold;
+}
+
+.tenantTable tr:hover {
+  background-color: #f9f9f9;
+}
+
+.editBtn,
+.deleteBtn {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.editBtn {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.editBtn:hover {
+  background-color: #0056b3;
+}
+
+.deleteBtn {
+  background-color: #dc3545; 
+  color: #fff;
+}
+
+.deleteBtn:hover {
+  background-color: #c82333; 
+}
+
+.editBtn:disabled,
+.deleteBtn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+

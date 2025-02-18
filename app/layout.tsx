@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import Header from "./_components/header/Header";
 import Sidebar from "./_components/sidebar/Sidebar";
-import Footer from "./_components/footer/Footer";
 import styles from "./layout.module.css";
 import "./globals.css";
 
@@ -25,7 +24,6 @@ const Layout = ({ children }: LayoutProps) => {
           <div className={styles.pageContent}>
             <Header />
             <main>{children}</main>
-            <Footer />
           </div>
         </div>
       </body>
