@@ -8,6 +8,7 @@ interface TenantModalProps {
   onClose: () => void;
   onSubmit: (tenant: Tenant) => void;
   tenantToEdit?: Tenant;
+  isAddingTenant: boolean;
 }
 
 const TenantModal: React.FC<TenantModalProps> = ({
@@ -15,14 +16,15 @@ const TenantModal: React.FC<TenantModalProps> = ({
   onClose,
   onSubmit,
   tenantToEdit,
+  isAddingTenant,
 }) => {
-  // Ensure initial tenant state is correctly typed
   const [tenant, setTenant] = useState<Tenant>({
     id: tenantToEdit?.id ?? 0,
     name: tenantToEdit?.name || "",
     creationDate: tenantToEdit?.creationDate || "",
     active: tenantToEdit?.active || false,
   });
+
   useEffect(() => {
     if (tenantToEdit) {
       setTenant({
@@ -30,6 +32,13 @@ const TenantModal: React.FC<TenantModalProps> = ({
         name: tenantToEdit.name,
         creationDate: tenantToEdit.creationDate,
         active: tenantToEdit.active,
+      });
+    } else {
+      setTenant({
+        id: 0,
+        name: "",
+        creationDate: "",
+        active: false,
       });
     }
   }, [tenantToEdit]);
@@ -58,7 +67,7 @@ const TenantModal: React.FC<TenantModalProps> = ({
             &times;
           </button>
           <h2 className={styles.addEditTenant}>
-            {tenantToEdit ? "Edit Tenant" : "Add Tenant"}
+            {isAddingTenant ? "Add Tenant" : "Edit Tenant"}
           </h2>
           <form onSubmit={handleSubmit}>
             <div className={styles.formGroup}>
@@ -107,7 +116,7 @@ const TenantModal: React.FC<TenantModalProps> = ({
 
             <div className={styles.buttons}>
               <button type="submit" className={styles.submitButton}>
-                {tenantToEdit ? "Save Changes" : "Add Tenant"}
+                {isAddingTenant ? "Add Tenant" : "Save Changes"}
               </button>
               <button
                 type="button"

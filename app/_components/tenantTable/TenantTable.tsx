@@ -3,7 +3,7 @@ import styles from "./tenantTable.module.css";
 import { tenantsData } from "@/app/data";
 import TenantModal from "../tenantModal/TenantModal";
 import { Tenant } from "@/app/types";
-import Pagination from "../pagination/Pagination"; 
+import Pagination from "../pagination/Pagination";
 
 const TenantTable = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,18 +12,21 @@ const TenantTable = () => {
   const [tenantToEdit, setTenantToEdit] = useState<Tenant | undefined>(
     undefined
   );
+  const [isAddingTenant, setIsAddingTenant] = useState(false);
   
-  const [currentPage, setCurrentPage] = useState(1); 
-  const itemsPerPage = 10; 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  
+  // Modal state for adding tenant
   
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-     setSearchQuery(e.target.value);
-     setCurrentPage(1);
+    setSearchQuery(e.target.value);
+    setCurrentPage(1);
   };
   
   const handleStatusFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
-     setFilterStatus(e.target.value);
-     setCurrentPage(1);
+    setFilterStatus(e.target.value);
+    setCurrentPage(1);
   };
   
   const filteredTenants = tenantsData.filter((tenant) => {
@@ -50,18 +53,24 @@ const TenantTable = () => {
   };
   
   const closeModal = () => {
-    setIsModalOpen(false); 
+    setIsModalOpen(false);
   };
   
   const handleModalSubmit = (tenant: Tenant) => {
-    
-    console.log(tenant); 
+    console.log(tenant);
     closeModal();
   };
   
   // Handle page change
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+  };
+  
+  // Open the modal for adding a new tenant
+  const openAddTenantModal = () => {
+    setTenantToEdit(undefined);
+    setIsAddingTenant(true);
+    setIsModalOpen(true);
   };
   
   return (
@@ -85,6 +94,10 @@ const TenantTable = () => {
             <option value="Inactive">Inactive</option>
           </select>
         </div>
+        
+        <button className={styles.addTenantBtn} onClick={openAddTenantModal}>
+          Add Tenant
+        </button>
         
         <div className={styles.tableWrapper}>
           <table className={styles.tenantTable}>
@@ -124,12 +137,13 @@ const TenantTable = () => {
         currentPage={currentPage}
         onPageChange={handlePageChange}
       />
-      
+
       <TenantModal
         isOpen={isModalOpen}
         onClose={closeModal}
         onSubmit={handleModalSubmit}
         tenantToEdit={tenantToEdit}
+        isAddingTenant={isAddingTenant}
       />
     </div>
   );
