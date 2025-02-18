@@ -19,17 +19,29 @@ const Sidebar = () => {
 
         <ul className={styles.menu}>
           <li>
-            <Link href="/" className={styles.menuItem}>
+            <Link
+              href="/"
+              className={styles.menuItem}
+              onClick={() => setIsOpen(false)}
+            >
               <FaHome className={styles.icon} /> Dashboard
             </Link>
           </li>
           <li>
-            <Link href="/tenants" className={styles.menuItem}>
+            <Link
+              href="/tenants"
+              className={styles.menuItem}
+              onClick={() => setIsOpen(false)}
+            >
               <FaUsers className={styles.icon} /> Tenants
             </Link>
           </li>
           <li>
-            <Link href="/analytics" className={styles.menuItem}>
+            <Link
+              href="/analytics"
+              className={styles.menuItem}
+              onClick={() => setIsOpen(false)}
+            >
               <FaChartBar className={styles.icon} /> Analytics
             </Link>
           </li>
