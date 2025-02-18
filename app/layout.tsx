@@ -3,7 +3,7 @@ import Header from "./_components/header/Header";
 import Sidebar from "./_components/sidebar/Sidebar";
 import Footer from "./_components/footer/Footer";
 import styles from "./layout.module.css";
-import "./globals.css"
+import "./globals.css";
 
 interface LayoutProps {
   children: ReactNode;
@@ -19,12 +19,14 @@ const Layout = ({ children }: LayoutProps) => {
       </head>
       <body>
         <div className={styles.layoutContainer}>
-          <Header />
-          <div className={styles.mainContent}>
+          <div className={styles.menu}>
             <Sidebar />
-            <main className={styles.pageContent}>{children}</main>
           </div>
-          <Footer />
+          <div className={styles.pageContent}>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </div>
         </div>
       </body>
     </html>

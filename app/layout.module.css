@@ -1,0 +1,59 @@
+.layoutContainer {
+  display: flex;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.menu {
+  flex: 1;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+/* Main content area */
+.pageContent {
+  flex: 4;
+  height: 100vh;
+  margin-left: 250px; 
+  overflow-y: auto;
+ background: linear-gradient(to right, #f8f9fa, #e9ecef);
+
+}
+
+.pageContent header {
+  padding: 0px ;
+}
+
+
+
+/* For screens smaller than 1200px (tablet) */
+@media (max-width: 1200px) {
+  .menu {
+    width: 70px;
+  }
+  .pageContent {
+    margin-left: 70px; 
+  }
+}
+
+@media (max-width: 768px) {
+  .menu {
+    width: 60px; /* Even smaller sidebar */
+  }
+  .pageContent {
+    margin-left: 60px;
+  }
+}
+
+/* For screens smaller than 480px (small mobile) */
+@media (max-width: 480px) {
+  .menu {
+    width: 50px;
+  }
+  .pageContent {
+    margin-left: 50px;
+  }
+}
