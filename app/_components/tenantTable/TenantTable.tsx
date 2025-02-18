@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styles from "./tenantTable.module.css";
 import { tenantsData } from "@/app/data";
+import Pagination from "../pagination/Pagination";
+
 
 interface Tenant {
   id: number;
@@ -12,14 +14,16 @@ interface Tenant {
 const TenantTable = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterStatus, setFilterStatus] = useState<string>("All");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  // const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setSearchQuery(e.target.value);
+  // };
   
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  };
-  
-  const handleStatusFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFilterStatus(e.target.value);
-  };
+  // const handleStatusFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   setFilterStatus(e.target.value);
+  // };
   
   const filteredTenants = tenantsData.filter((tenant) => {
     const matchesSearch = tenant.name
@@ -33,6 +37,16 @@ const TenantTable = () => {
     return matchesSearch && matchesStatus;
   });
   
+  
+  const currentTenants = filteredTenants.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+  
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+  
   return (
     <div className={styles.container}>
       <div className={styles.tableContainer}>
@@ -42,19 +56,25 @@ const TenantTable = () => {
             className={styles.searchInput}
             placeholder="Search tenants"
             value={searchQuery}
-            onChange={handleSearch}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1);
+            }}
           />
           <select
             className={styles.filterSelect}
             value={filterStatus}
-            onChange={handleStatusFilter}
+            onChange={(e) => {
+              setFilterStatus(e.target.value);
+              setCurrentPage(1);
+            }}
           >
             <option value="All">All</option>
             <option value="Active">Active</option>
             <option value="Inactive">Inactive</option>
           </select>
         </div>
-        
+
         <div className={styles.tableWrapper}>
           <table className={styles.tenantTable}>
             <thead>
@@ -66,7 +86,7 @@ const TenantTable = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredTenants.map((tenant) => (
+              {currentTenants.map((tenant) => (
                 <tr key={tenant.id}>
                   <td>{tenant.name}</td>
                   <td>{tenant.creationDate}</td>
@@ -80,6 +100,13 @@ const TenantTable = () => {
             </tbody>
           </table>
         </div>
+
+        <Pagination
+          totalItems={filteredTenants.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );

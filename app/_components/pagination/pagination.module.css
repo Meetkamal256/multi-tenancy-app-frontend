@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 16px;
-  background-color: #fff;
+  background-color: #f7f7f7; /* Updated background color */
   border-radius: 8px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -11,11 +11,9 @@
 .paginationContainer .pageInfo {
   font-family: "Poppins", sans-serif;
   font-size: 14px;
-  color: #667085;
-  font-size: 14px;
+  color: #4b5563; /* Adjusted to darker tone for better readability */
   font-weight: 400;
   line-height: 20px;
-  letter-spacing: -0.005em;
   text-align: center;
 }
 
@@ -37,20 +35,21 @@
   line-height: 22.4px;
   text-align: center;
   background: none;
-  color: #98a2b3;
+  color: #6b7280; /* Adjusted color for neutral button */
   cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .pageButton.current {
-  background-color: #fef5f7;
-  color: red;
+  background-color: #fef5f7; /* Soft background color for selected page */
+  color: #f85959; /* Updated to a more vibrant red for selected page */
   padding: 8px;
-  radius: 6px;
+  border-radius: 6px;
 }
 
 .ellipsis {
   font-size: 14px;
-  color: #485467;
+  color: #9ca3af; /* Lighter gray for ellipses */
 }
 
 .nextPrevButtons {
@@ -62,12 +61,12 @@
 .prevButton,
 .nextButton {
   background-color: #fff;
-  border: 2px solid #eee;
+  border: 2px solid #e5e7eb; /* Lighter border color */
   border-radius: 8px;
   padding: 8px 12px;
-  color: #344054;
+  color: #374151; /* Updated to a darker gray for better contrast */
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .prevButton .arrowIcon,
@@ -77,7 +76,8 @@
 
 .prevButton:hover,
 .nextButton:hover {
-  background-color: #f4e6e6; /* Light pink hover effect */
+  background-color: #f3f4f6; /* Light gray hover effect */
+  border-color: #d1d5db; /* Subtle border color change on hover */
 }
 
 .prevButton,
