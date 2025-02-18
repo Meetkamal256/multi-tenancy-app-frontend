@@ -2,10 +2,11 @@
 import { useState } from "react";
 import styles from "./sidebar.module.css";
 import { FaHome, FaUsers, FaChartBar, FaBars, FaTimes } from "react-icons/fa";
-
+import Link from "next/link"; // Import Link component from Next.js
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <>
       <button className={styles.menuToggle} onClick={() => setIsOpen(!isOpen)}>
@@ -15,22 +16,22 @@ const Sidebar = () => {
         <div className={styles.logo}>
           <h2>SaaS Admin</h2>
         </div>
-        
+
         <ul className={styles.menu}>
           <li>
-            <a href="#" className={styles.menuItem}>
+            <Link href="/" className={styles.menuItem}>
               <FaHome className={styles.icon} /> Dashboard
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/tenants" className={styles.menuItem}>
+            <Link href="/tenants" className={styles.menuItem}>
               <FaUsers className={styles.icon} /> Tenants
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/analytics" className={styles.menuItem}>
+            <Link href="/analytics" className={styles.menuItem}>
               <FaChartBar className={styles.icon} /> Analytics
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>
