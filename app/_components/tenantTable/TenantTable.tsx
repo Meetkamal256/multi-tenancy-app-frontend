@@ -1,23 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./tenantTable.module.css";
-import { tenantsData } from "@/app/data";
 import TenantModal from "../tenantModal/TenantModal";
 import { Tenant } from "@/app/types";
 import Pagination from "../pagination/Pagination";
 
+const API_URL = "http://localhost:5000/tenants";
+
 const TenantTable = () => {
+  const [tenants, setTenants] = useState<Tenant[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterStatus, setFilterStatus] = useState<string>("All");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddingTenant, setIsAddingTenant] = useState(false);
   const [tenantToEdit, setTenantToEdit] = useState<Tenant | undefined>(
     undefined
   );
-  const [isAddingTenant, setIsAddingTenant] = useState(false);
-  
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   
-  // Modal state for adding tenant
+  useEffect(() => {
+    const fetchTenants = async () => {
+      try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        setTenants(data);
+      } catch (error) {
+        console.error("Error fetching tenants:", error);
+      }
+    };
+    fetchTenants();
+  }, []);
   
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -29,48 +41,94 @@ const TenantTable = () => {
     setCurrentPage(1);
   };
   
-  const filteredTenants = tenantsData.filter((tenant) => {
+  const filteredTenants = tenants.filter((tenant) => {
     const matchesSearch = tenant.name
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
     const matchesStatus =
       filterStatus === "All" ||
-      (filterStatus === "Active" && tenant.active) ||
-      (filterStatus === "Inactive" && !tenant.active);
-    
+      (filterStatus === "Active" && tenant.isActive) ||
+      (filterStatus === "Inactive" && !tenant.isActive);
     return matchesSearch && matchesStatus;
   });
   
-  // Slice tenants based on the current page
   const paginatedTenants = filteredTenants.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
   
   const openModal = (tenant?: Tenant) => {
+    console.log("Opening modal with tenant:", tenant);
     setTenantToEdit(tenant);
+    setIsAddingTenant(!tenant);
     setIsModalOpen(true);
   };
   
   const closeModal = () => {
     setIsModalOpen(false);
+    setTenantToEdit(undefined);
   };
   
-  const handleModalSubmit = (tenant: Tenant) => {
-    console.log(tenant);
+  const handleModalSubmit = async (
+    tenant: Omit<Tenant, "id" | "createdAt"> | Tenant
+  ) => {
+    console.log("Submitting tenant:", tenant);
+    
+    if (!tenant.hasOwnProperty("id")) {
+      await addTenant(tenant);
+    } else {
+      await updateTenant(tenant as Tenant);
+    }
     closeModal();
   };
   
-  // Handle page change
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+  const addTenant = async (tenant: Omit<Tenant, "id" | "createdAt">) => {
+    console.log("Adding tenant:", tenant);
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(tenant),
+      });
+      const responseData = await response.json();
+      if (response.ok) {
+        setTenants([...tenants, responseData]);
+      } else {
+        console.error(
+          "Failed to add tenant:",
+          response.statusText,
+          responseData
+        );
+      }
+    } catch (error) {
+      console.error("Error adding tenant:", error);
+    }
   };
   
-  // Open the modal for adding a new tenant
-  const openAddTenantModal = () => {
-    setTenantToEdit(undefined);
-    setIsAddingTenant(true);
-    setIsModalOpen(true);
+  const updateTenant = async (tenant: Tenant) => {
+    try {
+      const response = await fetch(`${API_URL}/${tenant.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(tenant),
+      });
+      if (response.ok) {
+        setTenants(tenants.map((t) => (t.id === tenant.id ? tenant : t)));
+      }
+    } catch (error) {
+      console.error("Error updating tenant:", error);
+    }
+  };
+  
+  const deleteTenant = async (id: number) => {
+    try {
+      const response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+      if (response.ok) {
+        setTenants(tenants.filter((tenant) => tenant.id !== id));
+      }
+    } catch (error) {
+      console.error("Error deleting tenant:", error);
+    }
   };
   
   return (
@@ -94,17 +152,15 @@ const TenantTable = () => {
             <option value="Inactive">Inactive</option>
           </select>
         </div>
-        
-        <button className={styles.addTenantBtn} onClick={openAddTenantModal}>
+        <button className={styles.addTenantBtn} onClick={() => openModal()}>
           Add Tenant
         </button>
-        
         <div className={styles.tableWrapper}>
           <table className={styles.tenantTable}>
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Creation Date</th>
+                <th>Email</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
@@ -113,8 +169,8 @@ const TenantTable = () => {
               {paginatedTenants.map((tenant) => (
                 <tr key={tenant.id}>
                   <td>{tenant.name}</td>
-                  <td>{tenant.creationDate}</td>
-                  <td>{tenant.active ? "Active" : "Inactive"}</td>
+                  <td>{tenant.email}</td>
+                  <td>{tenant.isActive ? "Active" : "Inactive"}</td>
                   <td>
                     <button
                       className={styles.editBtn}
@@ -122,7 +178,13 @@ const TenantTable = () => {
                     >
                       Edit
                     </button>
-                    <button className={styles.deleteBtn}>Delete</button>
+                    <button
+                      className={styles.deleteBtn}
+                   onClick={() => tenant.id !== null && deleteTenant(tenant.id)}
+                    
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -130,14 +192,12 @@ const TenantTable = () => {
           </table>
         </div>
       </div>
-      
       <Pagination
         totalItems={filteredTenants.length}
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}
-        onPageChange={handlePageChange}
+        onPageChange={setCurrentPage}
       />
-
       <TenantModal
         isOpen={isModalOpen}
         onClose={closeModal}
