@@ -27,8 +27,8 @@ const TenantTable = () => {
       } catch (error) {
         console.error("Error fetching tenants:", error);
       }
+      fetchTenants();
     };
-    fetchTenants();
   }, []);
   
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
