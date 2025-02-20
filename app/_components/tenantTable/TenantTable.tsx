@@ -18,17 +18,19 @@ const TenantTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   
+  // Fetch tenants function (defined outside useEffect to avoid infinite loop)
+  const fetchTenants = async () => {
+    try {
+      const response = await fetch(API_URL);
+      const data = await response.json();
+      setTenants(data);
+    } catch (error) {
+      console.error("Error fetching tenants:", error);
+    }
+  };
+  
   useEffect(() => {
-    const fetchTenants = async () => {
-      try {
-        const response = await fetch(API_URL);
-        const data = await response.json();
-        setTenants(data);
-      } catch (error) {
-        console.error("Error fetching tenants:", error);
-      }
-      fetchTenants();
-    };
+    fetchTenants();
   }, []);
   
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,7 +60,6 @@ const TenantTable = () => {
   );
   
   const openModal = (tenant?: Tenant) => {
-    console.log("Opening modal with tenant:", tenant);
     setTenantToEdit(tenant);
     setIsAddingTenant(!tenant);
     setIsModalOpen(true);
@@ -72,9 +73,7 @@ const TenantTable = () => {
   const handleModalSubmit = async (
     tenant: Omit<Tenant, "id" | "createdAt"> | Tenant
   ) => {
-    console.log("Submitting tenant:", tenant);
-    
-    if (!tenant.hasOwnProperty("id")) {
+    if (!("id" in tenant)) {
       await addTenant(tenant);
     } else {
       await updateTenant(tenant as Tenant);
@@ -83,7 +82,6 @@ const TenantTable = () => {
   };
   
   const addTenant = async (tenant: Omit<Tenant, "id" | "createdAt">) => {
-    console.log("Adding tenant:", tenant);
     try {
       const response = await fetch(API_URL, {
         method: "POST",
@@ -92,7 +90,7 @@ const TenantTable = () => {
       });
       const responseData = await response.json();
       if (response.ok) {
-        setTenants([...tenants, responseData]);
+        setTenants((prev) => [...prev, responseData]);
       } else {
         console.error(
           "Failed to add tenant:",
@@ -113,7 +111,9 @@ const TenantTable = () => {
         body: JSON.stringify(tenant),
       });
       if (response.ok) {
-        setTenants(tenants.map((t) => (t.id === tenant.id ? tenant : t)));
+        setTenants((prev) =>
+          prev.map((t) => (t.id === tenant.id ? tenant : t))
+        );
       }
     } catch (error) {
       console.error("Error updating tenant:", error);
@@ -124,7 +124,7 @@ const TenantTable = () => {
     try {
       const response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
       if (response.ok) {
-        setTenants(tenants.filter((tenant) => tenant.id !== id));
+        setTenants((prev) => prev.filter((tenant) => tenant.id !== id));
       }
     } catch (error) {
       console.error("Error deleting tenant:", error);
@@ -180,8 +180,9 @@ const TenantTable = () => {
                     </button>
                     <button
                       className={styles.deleteBtn}
-                   onClick={() => tenant.id !== null && deleteTenant(tenant.id)}
-                    
+                      onClick={() => {
+                        if (tenant.id !== null) deleteTenant(tenant.id);
+                      }}
                     >
                       Delete
                     </button>
