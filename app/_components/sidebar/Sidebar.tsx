@@ -16,11 +16,11 @@ const Sidebar = () => {
         <div className={styles.logo}>
           <h2>SaaS Admin</h2>
         </div>
-
+        
         <ul className={styles.menu}>
           <li>
             <Link
-              href="/"
+              href="/dashboard"
               className={styles.menuItem}
               onClick={() => setIsOpen(false)}
             >

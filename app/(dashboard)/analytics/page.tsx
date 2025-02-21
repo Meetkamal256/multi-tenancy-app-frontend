@@ -1,4 +1,4 @@
-import AnalyticsChart from "../_components/analyticsChart/AnalyticsChart"
+import AnalyticsChart from "@/app/_components/analyticsChart/AnalyticsChart"
 import styles from "./analytics.module.css"
 
 const page = () => {

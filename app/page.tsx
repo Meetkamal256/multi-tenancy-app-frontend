@@ -1,13 +1,11 @@
-"use client";
-import Image from "next/image";
-import styles from "./page.module.css";
+import React from 'react'
 
-export default function Home() {
+const page = () => {
   return (
-    <>
-      <div className="container">
-        <h1>Welcome to the SaaS Admin Dashboard</h1>
-      </div>
-    </>
-  );
+    <div>
+      <h1 className='container'>Multi-tenency Sass App Landing page</h1>
+    </div>
+  )
 }
+
+export default page
