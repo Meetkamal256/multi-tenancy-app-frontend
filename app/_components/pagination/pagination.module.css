@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 16px;
-  background-color: #f7f7f7; /* Updated background color */
+  background-color: #f7f7f7; 
   border-radius: 8px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
   margin-top: 15px;
@@ -12,7 +12,7 @@
 .paginationContainer .pageInfo {
   font-family: "Poppins", sans-serif;
   font-size: 14px;
-  color: #4b5563; /* Adjusted to darker tone for better readability */
+  color: #4b5563; 
   font-weight: 400;
   line-height: 20px;
   text-align: center;
@@ -36,21 +36,21 @@
   line-height: 22.4px;
   text-align: center;
   background: none;
-  color: #6b7280; /* Adjusted color for neutral button */
+  color: #6b7280; 
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
 .pageButton.current {
-  background-color: #fef5f7; /* Soft background color for selected page */
-  color: #f85959; /* Updated to a more vibrant red for selected page */
+  background-color: #fef5f7; 
+  color: #f85959; 
   padding: 8px;
   border-radius: 6px;
 }
 
 .ellipsis {
   font-size: 14px;
-  color: #9ca3af; /* Lighter gray for ellipses */
+  color: #9ca3af; 
 }
 
 .nextPrevButtons {
@@ -62,10 +62,10 @@
 .prevButton,
 .nextButton {
   background-color: #fff;
-  border: 2px solid #e5e7eb; /* Lighter border color */
+  border: 2px solid #e5e7eb;
   border-radius: 8px;
   padding: 8px 12px;
-  color: #374151; /* Updated to a darker gray for better contrast */
+  color: #374151; 
   cursor: pointer;
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
@@ -77,8 +77,8 @@
 
 .prevButton:hover,
 .nextButton:hover {
-  background-color: #f3f4f6; /* Light gray hover effect */
-  border-color: #d1d5db; /* Subtle border color change on hover */
+  background-color: #f3f4f6; 
+  border-color: #d1d5db; 
 }
 
 .prevButton,
@@ -94,18 +94,18 @@
     flex-direction: column;
     padding: 12px;
   }
-
+  
   .paginationContainer .pageNumbers {
     flex-wrap: wrap;
     justify-content: center;
     gap: 6px;
   }
-
+  
   .pageButton {
     padding: 6px 12px;
     font-size: 12px;
   }
-
+  
   .nextPrevButtons {
     margin-top: 12px;
   }
@@ -115,25 +115,25 @@
   .paginationContainer {
     padding: 8px;
   }
-
+  
   .paginationContainer .pageInfo {
     font-size: 12px;
   }
-
+  
   .paginationContainer .pageNumbers {
     font-size: 12px;
     gap: 4px;
   }
-
+  
   .pageButton {
     padding: 4px 8px;
     font-size: 10px;
   }
-
+  
   .nextPrevButtons {
     margin-top: 8px;
   }
-
+  
   .prevButton,
   .nextButton {
     padding: 6px 8px;
@@ -144,25 +144,25 @@
   .paginationContainer {
     padding: 6px;
   }
-
+  
   .paginationContainer .pageInfo {
     font-size: 10px;
   }
-
+  
   .paginationContainer .pageNumbers {
     font-size: 10px;
     gap: 2px;
   }
-
+  
   .pageButton {
     padding: 4px 8px;
     font-size: 8px;
   }
-
+  
   .nextPrevButtons {
     margin-top: 8px;
   }
-
+  
   .prevButton,
   .nextButton {
     padding: 4px 6px;
