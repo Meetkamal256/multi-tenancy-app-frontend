@@ -172,20 +172,22 @@ const TenantTable = () => {
                   <td>{tenant.email}</td>
                   <td>{tenant.isActive ? "Active" : "Inactive"}</td>
                   <td>
-                    <button
-                      className={styles.editBtn}
-                      onClick={() => openModal(tenant)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className={styles.deleteBtn}
-                      onClick={() => {
-                        if (tenant.id !== null) deleteTenant(tenant.id);
-                      }}
-                    >
-                      Delete
-                    </button>
+                    <div className={styles.buttonContainer}>
+                      <button
+                        className={styles.editBtn}
+                        onClick={() => openModal(tenant)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className={styles.deleteBtn}
+                        onClick={() => {
+                          if (tenant.id !== null) deleteTenant(tenant.id);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
