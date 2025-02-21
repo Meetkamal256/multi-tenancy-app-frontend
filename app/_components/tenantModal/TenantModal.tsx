@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./tenantModal.module.css";
 import { Tenant } from "@/app/types";
+import { IoMdClose } from "react-icons/io";
 
 interface TenantModalProps {
   isOpen: boolean;
@@ -75,7 +76,7 @@ const TenantModal: React.FC<TenantModalProps> = ({
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
         <button className={styles.closeButton} onClick={onClose}>
-          &times;
+          <IoMdClose size={30} />
         </button>
         <h2 className={styles.addEditTenant}>
           {isAddingTenant ? "Add Tenant" : "Edit Tenant"}
@@ -95,7 +96,7 @@ const TenantModal: React.FC<TenantModalProps> = ({
               className={styles.formInput}
             />
           </div>
-          
+
           <div className={styles.formGroup}>
             <label htmlFor="email" className={styles.formLabel}>
               Email
@@ -110,7 +111,7 @@ const TenantModal: React.FC<TenantModalProps> = ({
               className={styles.formInput}
             />
           </div>
-          
+
           <div className={styles.formGroup}>
             <label htmlFor="isActive" className={styles.formLabel}>
               Active
@@ -124,7 +125,7 @@ const TenantModal: React.FC<TenantModalProps> = ({
               className={styles.checkboxInput}
             />
           </div>
-          
+
           <div className={styles.buttons}>
             <button type="submit" className={styles.submitButton}>
               {isAddingTenant ? "Add Tenant" : "Save Changes"}
