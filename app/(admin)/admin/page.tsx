@@ -1,5 +1,5 @@
 "use client";
-import "./dashboardHome.module.css"
+import "./adminDashboardHome.module.css"
 
 export default function Home() {
   return (

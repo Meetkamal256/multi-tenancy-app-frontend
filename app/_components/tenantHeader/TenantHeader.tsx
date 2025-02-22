@@ -1,11 +1,11 @@
-import styles from "./header.module.css"
+import styles from "./tenantHeader.module.css"
 
 const user = {
-  name: "Admin User",
-  email: "admin@example.com",
+  name: "Tenant",
+  email: "tenant@example.com",
 };
 
-const Header = () => {
+const AdminHeader = () => {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
@@ -21,4 +21,4 @@ const Header = () => {
   );
 }
 
-export default Header
+export default AdminHeader;

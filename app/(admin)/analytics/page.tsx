@@ -1,5 +1,5 @@
 import AnalyticsChart from "@/app/_components/analyticsChart/AnalyticsChart"
-import styles from "./analytics.module.css"
+import styles from "./adminAnalytics.module.css"
 
 const page = () => {
   return (

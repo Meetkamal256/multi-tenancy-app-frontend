@@ -1,7 +1,8 @@
 import React, { ReactNode } from "react";
-import styles from "./dashboardLayout.module.css";
-import Sidebar from "../_components/sidebar/Sidebar";
-import Header from "../_components/header/Header";
+import styles from "./adminDashboardLayout.module.css";
+import AdminSidebar from "../_components/adminSidebar/AdminSidebar";
+import AdminHeader from "../_components/AdminHeader/AdminHeader";
+
 
 interface LayoutProps {
   children: ReactNode;
@@ -18,10 +19,10 @@ const Layout = ({ children }: LayoutProps) => {
       <body>
         <div className={styles.layoutContainer}>
           <div className={styles.menu}>
-            <Sidebar />
+            <AdminSidebar />
           </div>
           <div className={styles.pageContent}>
-            <Header />
+            <AdminHeader />
             <main>{children}</main>
           </div>
         </div>

@@ -1,0 +1,91 @@
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-right: 1px solid #ddd;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+  overflow-x: hidden;
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+}
+
+/* Logo */
+.logo {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: #fff;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 50px 0;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 20px;
+  color: #333;
+  text-decoration: none;
+  transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+  border-radius: 5px;
+}
+
+.menuItem:hover {
+  background: #f5f5f5;
+}
+
+.menuItem.active {
+  background: #d9e8ff;
+  color: #0f3460;
+  font-weight: bold;
+}
+
+.icon {
+  font-size: 18px;
+}
+
+/* Toggle Button */
+.menuToggle {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 5px;
+  background: #fff;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+@media (max-width: 768px) {
+  .menuToggle {
+    display: block;
+  }
+
+   .logo {
+    padding-left: 20px; 
+    font-size: 18px;
+  }
+}

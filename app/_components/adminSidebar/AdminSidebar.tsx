@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
-import styles from "./sidebar.module.css";
+import styles from "./adminSidebar.module.css";
 import { FaHome, FaUsers, FaChartBar, FaBars, FaTimes } from "react-icons/fa";
 import Link from "next/link"; // Import Link component from Next.js
 
-const Sidebar = () => {
+const adminSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -20,7 +20,7 @@ const Sidebar = () => {
         <ul className={styles.menu}>
           <li>
             <Link
-              href="/dashboard"
+              href="/admin"
               className={styles.menuItem}
               onClick={() => setIsOpen(false)}
             >
@@ -51,4 +51,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default adminSidebar;

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./login.module.css";
-import SignupForm from "../_components/signupForm/SignupForm";
+import SignupForm from "../../_components/signupForm/SignupForm";
 
 const AuthFormWrapper = () => {
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
