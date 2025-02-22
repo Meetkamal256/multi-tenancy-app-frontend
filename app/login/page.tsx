@@ -1,9 +1,11 @@
 "use client";
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styles from "./login.module.css";
 import SignupForm from "../_components/signupForm/SignupForm";
 
-const LoginForm = () => {
+const AuthFormWrapper = () => {
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
   
   return (
@@ -28,7 +30,6 @@ const LoginForm = () => {
           </div>
         </div>
         
-        {/* Dynamically load the form */}
         {activeTab === "login" ? <LoginFormContent /> : <SignupForm />}
       </div>
     </div>
@@ -38,14 +39,60 @@ const LoginForm = () => {
 const LoginFormContent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login form submitted", { email, password });
+    
+    const newErrors: { [key: string]: string } = {};
+    if (!email) newErrors.email = "Email is required";
+    if (!password) newErrors.password = "Password is required";
+    
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    
+    try {
+      const response = await fetch("http://localhost:5000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        toast.error(data.error || "Login failed");
+      } else {
+        toast.success("Login successful!");
+        setEmail("");
+        setPassword("");
+        setErrors({});
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.");
+    }
+  };
+  
+  const handleInputChange = (field: string, value: string) => {
+    switch (field) {
+      case "email":
+        setEmail(value);
+        if (errors.email && value)
+          setErrors((prev) => ({ ...prev, email: "" }));
+        break;
+      case "password":
+        setPassword(value);
+        if (errors.password && value)
+          setErrors((prev) => ({ ...prev, password: "" }));
+        break;
+    }
   };
   
   return (
     <>
+      <ToastContainer position="top-right" autoClose={3000} />
       <h1 className={styles.sectionHeading}>Welcome back</h1>
       <p className={styles.sectionParagraph}>
         Let's get back to managing your clients
@@ -59,9 +106,11 @@ const LoginFormContent = () => {
             id="email"
             placeholder="Enter email address"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => handleInputChange("email", e.target.value)}
           />
+          {errors.email && <p className={styles.error}>{errors.email}</p>}
         </div>
+        
         <div className={styles.formGroup}>
           <label htmlFor="password">Password</label>
           <input
@@ -69,16 +118,17 @@ const LoginFormContent = () => {
             id="password"
             placeholder="Enter password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => handleInputChange("password", e.target.value)}
           />
+          {errors.password && <p className={styles.error}>{errors.password}</p>}
         </div>
+        
         <button type="submit" className={styles.submitButton}>
           Login
         </button>
       </form>
-      
     </>
   );
 };
 
-export default LoginForm;
+export default AuthFormWrapper;

@@ -4,4 +4,7 @@ export interface Tenant {
   email: string;
   createdAt: string;
   isActive: boolean;
+  subscription: string;
+  billingCycle: string;
+  dataUsage: number;
 }
