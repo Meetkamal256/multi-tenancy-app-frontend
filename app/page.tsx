@@ -1,4 +1,5 @@
 import React from 'react'
+import SignUp from './_components/signUp/SignUp'
 
 const page = () => {
   return (
@@ -8,4 +9,4 @@ const page = () => {
   )
 }
 
-export default page
+export default page;
