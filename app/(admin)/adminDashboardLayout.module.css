@@ -11,6 +11,7 @@
   left: 0;
   top: 0;
   bottom: 0;
+ z-index: 1000;
 }
 
 /* Main content area */
@@ -19,7 +20,7 @@
   height: 100vh;
   margin-left: 250px; 
   overflow-y: auto;
- background: #fff;
+  background: #fff;
 
 }
 

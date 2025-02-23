@@ -45,16 +45,16 @@ const LoginFormContent = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    
     const newErrors: { [key: string]: string } = {};
     if (!email) newErrors.email = "Email is required";
     if (!password) newErrors.password = "Password is required";
-
+    
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-
+    
     try {
       const response = await fetch("http://localhost:5000/auth/login", {
         method: "POST",
@@ -75,9 +75,15 @@ const LoginFormContent = () => {
         setPassword("");
         setErrors({});
         
-        setTimeout(() => {
-          router.push("/admin");
-        }, 1000);
+       setTimeout(() => {
+         if (data.user.role === "admin") {
+           router.push("/admin");
+         } else if (data.user.role === "tenant") {
+           router.push("/tenant");
+         } else {
+           toast.error("Invalid user role");
+         }
+       }, 1000);
       }
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
