@@ -16,7 +16,7 @@ const tenantSidebar = () => {
         <div className={styles.logo}>
           <h2>Saas Tenant</h2>
         </div>
-        
+
         <ul className={styles.menu}>
           <li>
             <Link
@@ -29,7 +29,7 @@ const tenantSidebar = () => {
           </li>
           <li>
             <Link
-              href="#"
+              href="/profile"
               className={styles.menuItem}
               onClick={() => setIsOpen(false)}
             >
@@ -38,11 +38,20 @@ const tenantSidebar = () => {
           </li>
           <li>
             <Link
-              href="#"
+              href="/subscription"
               className={styles.menuItem}
               onClick={() => setIsOpen(false)}
             >
               <FaChartBar className={styles.icon} /> Subscription
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/settings"
+              className={styles.menuItem}
+              onClick={() => setIsOpen(false)}
+            >
+              <FaChartBar className={styles.icon} /> Settings
             </Link>
           </li>
         </ul>
