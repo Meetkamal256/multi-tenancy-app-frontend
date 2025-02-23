@@ -1,0 +1,116 @@
+.container {
+  padding: 32px;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 2rem;
+  color: #333;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #666;
+}
+
+.statsSection {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  flex: 1;
+  min-width: 250px;
+}
+
+.statCard h2 {
+  color: #222;
+  margin-bottom: 0.5rem;
+}
+
+.statCard p {
+  font-size: 1.5rem;
+  color: #444;
+}
+
+.recentActivity {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recentActivity h2 {
+  color: #222;
+  margin-bottom: 1rem;
+}
+
+.recentActivity ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.recentActivity li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.recentActivity li:last-child {
+  border-bottom: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 1280px) {
+  .statsSection {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 1024px) {
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .statCard p {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.5rem;
+  }
+  
+  .subtitle {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 16px;
+  }
+  
+  .statCard {
+    padding: 1rem;
+  }
+  
+  .recentActivity {
+    padding: 1rem;
+  }
+}

@@ -4,7 +4,7 @@ import styles from "./tenantSidebar.module.css";
 import { FaHome, FaUsers, FaChartBar, FaBars, FaTimes } from "react-icons/fa";
 import Link from "next/link";
 
-const adminSidebar = () => {
+const tenantSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -20,7 +20,7 @@ const adminSidebar = () => {
         <ul className={styles.menu}>
           <li>
             <Link
-              href="/tenant"
+              href="/dashboard"
               className={styles.menuItem}
               onClick={() => setIsOpen(false)}
             >
@@ -51,4 +51,4 @@ const adminSidebar = () => {
   );
 };
 
-export default adminSidebar;
+export default tenantSidebar;
