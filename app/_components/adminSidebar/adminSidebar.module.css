@@ -14,7 +14,25 @@
   transition: transform 0.3s ease-in-out;
 }
 
-@media (max-width: 768px) {
+/* Toggle Button */
+.menuToggle {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 5px;
+  background: #fff;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+
+@media (max-width: 1140px) {
+   .menuToggle {
+    display: block;
+  }
+   
   .sidebar {
     transform: translateX(-100%);
   }
@@ -66,24 +84,12 @@
   font-size: 18px;
 }
 
-/* Toggle Button */
-.menuToggle {
-  display: none;
-  position: fixed;
-  top: 10px;
-  left: 5px;
-  background: #fff;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 1100;
-}
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .menuToggle {
     display: block;
   }
-
+   
    .logo {
     padding-left: 20px; 
     font-size: 18px;
