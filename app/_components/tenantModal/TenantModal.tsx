@@ -20,7 +20,7 @@ const TenantModal: React.FC<TenantModalProps> = ({
   isAddingTenant,
 }) => {
 const [tenant, setTenant] = useState<Tenant>({
-  id: isAddingTenant ? null : tenantToEdit?.id ?? null, // Fix TypeScript error
+  id: isAddingTenant ? null : tenantToEdit?.id ?? null, 
   name: tenantToEdit?.name ?? "",
   email: tenantToEdit?.email ?? "",
   isActive: tenantToEdit?.isActive ?? true,
@@ -107,7 +107,7 @@ useEffect(() => {
               className={styles.formInput}
             />
           </div>
-
+          
           <div className={styles.formGroup}>
             <label htmlFor="email" className={styles.formLabel}>
               Email
@@ -122,7 +122,7 @@ useEffect(() => {
               className={styles.formInput}
             />
           </div>
-
+          
           <div className={styles.formGroup}>
             <label htmlFor="isActive" className={styles.formLabel}>
               Active
@@ -136,7 +136,7 @@ useEffect(() => {
               className={styles.checkboxInput}
             />
           </div>
-
+          
           <div className={styles.buttons}>
             <button type="submit" className={styles.submitButton}>
               {isAddingTenant ? "Add Tenant" : "Save Changes"}
