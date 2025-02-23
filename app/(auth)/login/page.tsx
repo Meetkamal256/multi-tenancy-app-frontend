@@ -1,13 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./login.module.css";
 import SignupForm from "../../_components/signupForm/SignupForm";
 
 const AuthFormWrapper = () => {
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
-  
+
   return (
     <div className={styles.container}>
       <div className={styles.loginContainer}>
@@ -29,7 +30,7 @@ const AuthFormWrapper = () => {
             Sign Up
           </div>
         </div>
-        
+
         {activeTab === "login" ? <LoginFormContent /> : <SignupForm />}
       </div>
     </div>
@@ -40,19 +41,20 @@ const LoginFormContent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  
+  const router = useRouter();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const newErrors: { [key: string]: string } = {};
     if (!email) newErrors.email = "Email is required";
     if (!password) newErrors.password = "Password is required";
-    
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-    
+
     try {
       const response = await fetch("http://localhost:5000/auth/login", {
         method: "POST",
@@ -66,9 +68,16 @@ const LoginFormContent = () => {
         toast.error(data.error || "Login failed");
       } else {
         toast.success("Login successful!");
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        
         setEmail("");
         setPassword("");
         setErrors({});
+        
+        setTimeout(() => {
+          router.push("/admin");
+        }, 1000);
       }
     } catch (error) {
       toast.error("Something went wrong. Please try again.");

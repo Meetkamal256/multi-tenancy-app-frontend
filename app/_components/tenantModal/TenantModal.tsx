@@ -19,28 +19,39 @@ const TenantModal: React.FC<TenantModalProps> = ({
   tenantToEdit,
   isAddingTenant,
 }) => {
-  const [tenant, setTenant] = useState<Omit<Tenant, "id"> | Tenant>({
-    id: isAddingTenant ? undefined : tenantToEdit?.id, // Keep ID only for editing
-    name: tenantToEdit?.name ?? "",
-    email: tenantToEdit?.email ?? "",
-    isActive: tenantToEdit?.isActive ?? true,
-    createdAt: tenantToEdit?.createdAt ?? new Date().toISOString(),
-  });
+const [tenant, setTenant] = useState<Tenant>({
+  id: isAddingTenant ? null : tenantToEdit?.id ?? null, // Fix TypeScript error
+  name: tenantToEdit?.name ?? "",
+  email: tenantToEdit?.email ?? "",
+  isActive: tenantToEdit?.isActive ?? true,
+  subscription: tenantToEdit?.subscription ?? "Basic",
+  billingCycle: tenantToEdit?.billingCycle ?? "Monthly",
+  dataUsage: tenantToEdit?.dataUsage ?? 0,
+  createdAt: tenantToEdit?.createdAt ?? new Date().toISOString(),
+});
  
- useEffect(() => {
+ 
+useEffect(() => {
   if (isAddingTenant) {
     setTenant({
+      id: null,
       name: "",
       email: "",
       isActive: true,
+      subscription: "Basic",
+      billingCycle: "Monthly",
+      dataUsage: 0,
       createdAt: new Date().toISOString(),
     });
-  } else if (tenantToEdit?.id) { // Only set if ID exists
+  } else if (tenantToEdit?.id) {
     setTenant({
       id: tenantToEdit.id,
       name: tenantToEdit.name,
       email: tenantToEdit.email,
       isActive: tenantToEdit.isActive,
+      subscription: tenantToEdit.subscription ?? "Basic",
+      billingCycle: tenantToEdit.billingCycle ?? "Monthly",
+      dataUsage: tenantToEdit.dataUsage ?? 0,
       createdAt: tenantToEdit.createdAt,
     });
   }

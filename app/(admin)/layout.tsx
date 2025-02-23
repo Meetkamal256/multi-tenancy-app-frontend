@@ -14,7 +14,7 @@ const Layout = ({ children }: LayoutProps) => {
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>SaaS Dashboard</title>
+        <title>SaaS Admin Dashboard</title>
       </head>
       <body>
         <div className={styles.layoutContainer}>
