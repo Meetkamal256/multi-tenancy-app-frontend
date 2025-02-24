@@ -10,6 +10,7 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
+import { BACKEND_URL } from "@/app/constants";
 
 // Register required chart components
 ChartJS.register(
@@ -21,7 +22,7 @@ ChartJS.register(
   Tooltip
 );
 
-const API_URL = "http://localhost:5000/tenants";
+const API_URL = BACKEND_URL.concat("tenants");
 
 // Define Tenant interface
 interface Tenant {

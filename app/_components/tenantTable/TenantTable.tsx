@@ -5,8 +5,9 @@ import { Tenant } from "@/app/types";
 import Pagination from "../pagination/Pagination";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { BACKEND_URL } from "@/app/constants";
 
-const API_URL = "http://localhost:5000/tenants";
+const API_URL = BACKEND_URL.concat("tenants");
 
 
 

@@ -5,10 +5,11 @@ import { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./login.module.css";
 import SignupForm from "../../_components/signupForm/SignupForm";
+import { BACKEND_URL } from "@/app/constants";
 
 const AuthFormWrapper = () => {
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
-
+  
   return (
     <div className={styles.container}>
       <div className={styles.loginContainer}>
@@ -56,7 +57,7 @@ const LoginFormContent = () => {
     }
     
     try {
-      const response = await fetch("http://localhost:5000/auth/login", {
+      const response = await fetch(BACKEND_URL.concat("auth/login"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

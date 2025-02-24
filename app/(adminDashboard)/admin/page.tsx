@@ -4,6 +4,7 @@ import { FaUsers } from "react-icons/fa";
 import { MdSubscriptions } from "react-icons/md";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import styles from "./adminDashboardHome.module.css";
+import { BACKEND_URL } from "@/app/constants";
 
 interface TenantActivity {
   id: string;
@@ -24,7 +25,7 @@ export default function Home() {
         const token = localStorage.getItem("token");
         console.log("Stored Token:", token);
         
-        const response = await fetch("http://localhost:5000/admin/stats", {
+        const response = await fetch(BACKEND_URL.concat("admin/stats"), {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./signupForm.module.css";
+import { BACKEND_URL } from "@/app/constants";
 
 const SignupForm = () => {
   const [name, setName] = useState("");
@@ -29,7 +30,7 @@ const SignupForm = () => {
     }
     
     try {
-      const response = await fetch("http://localhost:5000/auth/register", {
+      const response = await fetch(BACKEND_URL.concat("auth/register"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),
