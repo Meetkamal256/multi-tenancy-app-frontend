@@ -4,7 +4,7 @@ import styles from "./tenantSidebar.module.css";
 import { FaHome, FaUsers, FaChartBar, FaBars, FaTimes } from "react-icons/fa";
 import Link from "next/link";
 
-const tenantSidebar = () => {
+const TenantSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -60,4 +60,4 @@ const tenantSidebar = () => {
   );
 };
 
-export default tenantSidebar;
+export default TenantSidebar;

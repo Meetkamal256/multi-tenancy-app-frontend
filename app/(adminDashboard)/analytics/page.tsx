@@ -1,12 +1,12 @@
 import AnalyticsChart from "@/app/_components/analyticsChart/AnalyticsChart"
-import styles from "./adminAnalytics.module.css"
+import styles from "./analytics.module.css"
 
 const page = () => {
   return (
-      <div className="container">
-          <h1>Analytics</h1>
+      <section className="container">
+          <h1 className={styles.sectionHeading}>Analytics</h1>
           <AnalyticsChart />
-    </div>
+    </section>
   )
 }
 

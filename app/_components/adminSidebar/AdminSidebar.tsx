@@ -4,7 +4,7 @@ import styles from "./adminSidebar.module.css";
 import { FaHome, FaUsers, FaChartBar, FaBars, FaTimes } from "react-icons/fa";
 import Link from "next/link"; // Import Link component from Next.js
 
-const adminSidebar = () => {
+const AdminSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -51,4 +51,4 @@ const adminSidebar = () => {
   );
 };
 
-export default adminSidebar;
+export default AdminSidebar;

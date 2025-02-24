@@ -30,7 +30,7 @@ const AuthFormWrapper = () => {
             Sign Up
           </div>
         </div>
-
+        
         {activeTab === "login" ? <LoginFormContent /> : <SignupForm />}
       </div>
     </div>
@@ -42,7 +42,7 @@ const LoginFormContent = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const router = useRouter();
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -75,17 +75,17 @@ const LoginFormContent = () => {
         setPassword("");
         setErrors({});
         
-       setTimeout(() => {
-         if (data.user.role === "admin") {
-           router.push("/admin");
-         } else if (data.user.role === "tenant") {
-           router.push("/dashboard");
-         } else {
-           toast.error("Invalid user role");
-         }
-       }, 1000);
+        setTimeout(() => {
+          if (data.user.role === "admin") {
+            router.push("/admin");
+          } else if (data.user.role === "tenant") {
+            router.push("/dashboard");
+          } else {
+            toast.error("Invalid user role");
+          }
+        }, 1000);
       }
-    } catch (error) {
+    } catch {
       toast.error("Something went wrong. Please try again.");
     }
   };
@@ -110,7 +110,7 @@ const LoginFormContent = () => {
       <ToastContainer position="top-right" autoClose={3000} />
       <h1 className={styles.sectionHeading}>Welcome back</h1>
       <p className={styles.sectionParagraph}>
-        Let's get back to managing your clients
+        Let&apos;s get back to managing your clients
       </p>
       
       <form onSubmit={handleSubmit} className={styles.form}>

@@ -3,7 +3,7 @@ import styles from "./adminSettings.module.css"
 
 const page = () => {
   return (
-    <div>settings page</div>
+    <div className={styles.container}>settings page</div>
   )
 }
 

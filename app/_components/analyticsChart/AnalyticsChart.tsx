@@ -21,26 +21,34 @@ ChartJS.register(
   Tooltip
 );
 
-const API_URL = "http://localhost:5000/tenants"; 
+const API_URL = "http://localhost:5000/tenants";
+
+// Define Tenant interface
+interface Tenant {
+  _id: string;
+  isActive: boolean;
+  createdAt: string;
+  dataUsage: number;
+}
 
 const AnalyticsChart = () => {
-  const [tenants, setTenants] = useState<any[]>([]); 
-  const [isLoading, setIsLoading] = useState(true); 
-  const [error, setError] = useState<string | null>(null); 
+  const [tenants, setTenants] = useState<Tenant[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   
   // Fetch tenants data
-  const fetchTenantsData = async () => {
+  const fetchTenantsData = async (): Promise<void> => {
     try {
       const response = await fetch(API_URL);
       if (!response.ok) {
         throw new Error("Failed to fetch tenants data");
       }
-      const data: any[] = await response.json(); 
-      setTenants(data); 
-      setIsLoading(false); 
+      const data: Tenant[] = await response.json();
+      setTenants(data);
+      setIsLoading(false);
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setError(error.message); 
+        setError(error.message);
       } else {
         setError("An unknown error occurred");
       }
@@ -52,18 +60,18 @@ const AnalyticsChart = () => {
     fetchTenantsData();
   }, []);
   
-  if (isLoading) return <div>Loading...</div>; 
-  if (error) return <div>Error: {error}</div>; 
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
   
   // Group tenants by year of creation and calculate total data usage for each year
   const dataByYear = tenants
-    .filter((tenant) => tenant.isActive) 
-    .reduce((acc, tenant) => {
-      const year = new Date(tenant.createdAt).getFullYear(); 
+    .filter((tenant) => tenant.isActive)
+    .reduce((acc: { [key: number]: number }, tenant) => {
+      const year = new Date(tenant.createdAt).getFullYear();
       if (!acc[year]) acc[year] = 0;
-      acc[year] += tenant.dataUsage; 
+      acc[year] += tenant.dataUsage;
       return acc;
-    }, {} as { [key: number]: number });
+    }, {});
   
   const years = Object.keys(dataByYear).map((year) => parseInt(year));
   const totalDataUsage = years.map((year) => dataByYear[year]);
@@ -84,7 +92,7 @@ const AnalyticsChart = () => {
   
   // Chart options with responsiveness adjustments
   const options = {
-    responsive: true, 
+    responsive: true,
     maintainAspectRatio: false,
     plugins: {
       title: {
@@ -94,10 +102,10 @@ const AnalyticsChart = () => {
     },
     scales: {
       x: {
-        beginAtZero: true, 
+        beginAtZero: true,
       },
       y: {
-        beginAtZero: true, 
+        beginAtZero: true,
       },
     },
   };

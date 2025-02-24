@@ -8,17 +8,17 @@ const SignupForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate form field
+    // Form validation
     const newErrors: { [key: string]: string } = {};
-    if (!name) newErrors.name = "Full name is required";
-    if (!email) newErrors.email = "Email is required";
+    if (!name.trim()) newErrors.name = "Full name is required";
+    if (!email.trim()) newErrors.email = "Email is required";
     if (!password) newErrors.password = "Password is required";
-    if (!confirmPassword) newErrors.confirmPassword = "Confirm password";
+    if (!confirmPassword) newErrors.confirmPassword = "Confirm your password";
     if (password && confirmPassword && password !== confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match";
     }
@@ -27,7 +27,7 @@ const SignupForm = () => {
       setErrors(newErrors);
       return;
     }
-      
+    
     try {
       const response = await fetch("http://localhost:5000/auth/register", {
         method: "POST",
@@ -47,7 +47,7 @@ const SignupForm = () => {
         setConfirmPassword("");
         setErrors({});
       }
-    } catch (error) {
+    } catch {
       toast.error("Something went wrong. Please try again.");
     }
   };
@@ -57,11 +57,12 @@ const SignupForm = () => {
     switch (field) {
       case "name":
         setName(value);
-        if (errors.name && value) setErrors((prev) => ({ ...prev, name: "" }));
+        if (errors.name && value.trim())
+          setErrors((prev) => ({ ...prev, name: "" }));
         break;
       case "email":
         setEmail(value);
-        if (errors.email && value)
+        if (errors.email && value.trim())
           setErrors((prev) => ({ ...prev, email: "" }));
         break;
       case "password":
@@ -73,6 +74,8 @@ const SignupForm = () => {
         setConfirmPassword(value);
         if (errors.confirmPassword && value)
           setErrors((prev) => ({ ...prev, confirmPassword: "" }));
+        break;
+      default:
         break;
     }
   };
