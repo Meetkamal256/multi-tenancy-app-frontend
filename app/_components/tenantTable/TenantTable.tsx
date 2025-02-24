@@ -3,8 +3,12 @@ import styles from "./tenantTable.module.css";
 import TenantModal from "../tenantModal/TenantModal";
 import { Tenant } from "@/app/types";
 import Pagination from "../pagination/Pagination";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const API_URL = "http://localhost:5000/tenants";
+
+
 
 const TenantTable = () => {
   const [tenants, setTenants] = useState<Tenant[]>([]);
@@ -25,6 +29,7 @@ const TenantTable = () => {
       setTenants(data);
     } catch (error) {
       console.error("Error fetching tenants:", error);
+      toast.error("Failed to fetch tenants");
     }
   };
   
@@ -79,7 +84,7 @@ const TenantTable = () => {
     }
     closeModal();
   };
-
+  
   const addTenant = async (tenant: Omit<Tenant, "id" | "createdAt">) => {
     try {
       const response = await fetch(API_URL, {
@@ -90,15 +95,18 @@ const TenantTable = () => {
       const responseData = await response.json();
       if (response.ok) {
         setTenants((prev) => [...prev, responseData]);
+        toast.success("Tenant added successfully!");
       } else {
         console.error(
           "Failed to add tenant:",
           response.statusText,
           responseData
         );
+        toast.error("Failed to add tenant");
       }
     } catch (error) {
       console.error("Error adding tenant:", error);
+      toast.error("Error adding tenant");
     }
   };
 
@@ -113,11 +121,14 @@ const TenantTable = () => {
         setTenants((prev) =>
           prev.map((t) => (t.id === tenant.id ? tenant : t))
         );
+        toast.success("Tenant updated successfully!");
       } else {
         console.error("Failed to update tenant:", response.statusText);
+        toast.error("Failed to update tenant");
       }
     } catch (error) {
       console.error("Error updating tenant:", error);
+      toast.error("Error updating tenant");
     }
   };
 
@@ -126,9 +137,14 @@ const TenantTable = () => {
       const response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
       if (response.ok) {
         setTenants((prev) => prev.filter((tenant) => tenant.id !== id));
+        toast.success("Tenant deleted successfully!");
+      } else {
+        console.error("Failed to delete tenant:", response.statusText);
+        toast.error("Failed to delete tenant");
       }
     } catch (error) {
       console.error("Error deleting tenant:", error);
+      toast.error("Error deleting tenant");
     }
   };
 
@@ -209,6 +225,7 @@ const TenantTable = () => {
         tenantToEdit={tenantToEdit}
         isAddingTenant={isAddingTenant}
       />
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };
