@@ -79,7 +79,7 @@ const LoginFormContent = () => {
          if (data.user.role === "admin") {
            router.push("/admin");
          } else if (data.user.role === "tenant") {
-           router.push("/tenant");
+           router.push("/dashboard");
          } else {
            toast.error("Invalid user role");
          }

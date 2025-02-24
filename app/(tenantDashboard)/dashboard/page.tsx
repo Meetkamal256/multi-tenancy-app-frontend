@@ -5,7 +5,7 @@ import { FaUserFriends, FaChartLine, FaClipboardList } from "react-icons/fa";
 
 const TenantDashboard = () => {
   const dummyStats = {
-    activeSubscriptions: 5,
+    subscription: "standard",
     dataUsage: "120GB",
     billingCycle: "monthly",
   };
@@ -38,11 +38,11 @@ const TenantDashboard = () => {
         </div>
         <div className={styles.statCard}>
           <FaClipboardList className={styles.icon} />
-          <h2>Active Subscriptions</h2>
-          <p>{dummyStats.activeSubscriptions}</p>
+          <h2>Current Subscription</h2>
+          <p>{dummyStats.subscription}</p>
         </div>
       </section>
-
+      
       {/* Recent Activities */}
       <section className={styles.recentActivity}>
         <h2>Recent Activities</h2>
