@@ -19,44 +19,45 @@ const TenantModal: React.FC<TenantModalProps> = ({
   tenantToEdit,
   isAddingTenant,
 }) => {
-const [tenant, setTenant] = useState<Tenant>({
-  id: isAddingTenant ? null : tenantToEdit?.id ?? null, 
-  name: tenantToEdit?.name ?? "",
-  email: tenantToEdit?.email ?? "",
-  isActive: tenantToEdit?.isActive ?? true,
-  subscription: tenantToEdit?.subscription ?? "Basic",
-  billingCycle: tenantToEdit?.billingCycle ?? "Monthly",
-  dataUsage: tenantToEdit?.dataUsage ?? 0,
-  createdAt: tenantToEdit?.createdAt ?? new Date().toISOString(),
-});
- 
- 
-useEffect(() => {
-  if (isAddingTenant) {
-    setTenant({
-      id: null,
-      name: "",
-      email: "",
-      isActive: true,
-      subscription: "Basic",
-      billingCycle: "Monthly",
-      dataUsage: 0,
-      createdAt: new Date().toISOString(),
-    });
-  } else if (tenantToEdit?.id) {
-    setTenant({
-      id: tenantToEdit.id,
-      name: tenantToEdit.name,
-      email: tenantToEdit.email,
-      isActive: tenantToEdit.isActive,
-      subscription: tenantToEdit.subscription ?? "Basic",
-      billingCycle: tenantToEdit.billingCycle ?? "Monthly",
-      dataUsage: tenantToEdit.dataUsage ?? 0,
-      createdAt: tenantToEdit.createdAt,
-    });
-  }
-}, [tenantToEdit, isAddingTenant]);
+  const [tenant, setTenant] = useState<Tenant>({
+    id: isAddingTenant ? null : tenantToEdit?.id ?? null,
+    name: tenantToEdit?.name ?? "",
+    email: tenantToEdit?.email ?? "",
+    password: "", // Add password field here
+    isActive: tenantToEdit?.isActive ?? true,
+    subscription: tenantToEdit?.subscription ?? "Basic",
+    billingCycle: tenantToEdit?.billingCycle ?? "Monthly",
+    dataUsage: tenantToEdit?.dataUsage ?? 0,
+    createdAt: tenantToEdit?.createdAt ?? new Date().toISOString(),
+  });
   
+  useEffect(() => {
+    if (isAddingTenant) {
+      setTenant({
+        id: null,
+        name: "",
+        email: "",
+        password: "",
+        isActive: true,
+        subscription: "Basic",
+        billingCycle: "Monthly",
+        dataUsage: 0,
+        createdAt: new Date().toISOString(),
+      });
+    } else if (tenantToEdit?.id) {
+      setTenant({
+        id: tenantToEdit.id,
+        name: tenantToEdit.name,
+        email: tenantToEdit.email,
+        password: "", // Keep password empty when editing
+        isActive: tenantToEdit.isActive,
+        subscription: tenantToEdit.subscription ?? "Basic",
+        billingCycle: tenantToEdit.billingCycle ?? "Monthly",
+        dataUsage: tenantToEdit.dataUsage ?? 0,
+        createdAt: tenantToEdit.createdAt,
+      });
+    }
+  }, [tenantToEdit, isAddingTenant]);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -67,19 +68,27 @@ useEffect(() => {
   };
   
   const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
-  
-  console.log("Tenant to Edit:", tenantToEdit);
-  
-  if (!isAddingTenant && !tenantToEdit?.id) {
-    console.error("Error: Tenant ID is missing when editing!");
-    return;
-  }
-  
-  onSubmit(tenant);
-  onClose();
-};
-  
+    e.preventDefault();
+    
+    // Basic validation
+    if (!tenant.name.trim() || !tenant.email.trim()) {
+      console.error("Please fill all required fields.");
+      return;
+    }
+    
+    if (isAddingTenant && !tenant.password?.trim()) {
+      console.error("Password is required for new tenants.");
+      return;
+    }
+    
+    if (!isAddingTenant && !tenantToEdit?.id) {
+      console.error("Error: Tenant ID is missing when editing!");
+      return;
+    }
+    
+    onSubmit(tenant);
+    onClose();
+  };
   
   if (!isOpen) return null;
   
@@ -107,7 +116,7 @@ useEffect(() => {
               className={styles.formInput}
             />
           </div>
-          
+
           <div className={styles.formGroup}>
             <label htmlFor="email" className={styles.formLabel}>
               Email
@@ -122,7 +131,26 @@ useEffect(() => {
               className={styles.formInput}
             />
           </div>
-          
+
+          {/* Password Field */}
+          {isAddingTenant && (
+            <div className={styles.formGroup}>
+              <label htmlFor="password" className={styles.formLabel}>
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={tenant.password}
+                onChange={handleChange}
+                required={isAddingTenant}
+                autoComplete="current-password"
+                className={styles.formInput}
+              />
+            </div>
+          )}
+
           <div className={styles.formGroup}>
             <label htmlFor="isActive" className={styles.formLabel}>
               Active
@@ -136,7 +164,7 @@ useEffect(() => {
               className={styles.checkboxInput}
             />
           </div>
-          
+
           <div className={styles.buttons}>
             <button type="submit" className={styles.submitButton}>
               {isAddingTenant ? "Add Tenant" : "Save Changes"}

@@ -18,7 +18,6 @@ const TenantTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   
-  // Fetch tenants function (defined outside useEffect to avoid infinite loop)
   const fetchTenants = async () => {
     try {
       const response = await fetch(API_URL);
@@ -73,14 +72,14 @@ const TenantTable = () => {
   const handleModalSubmit = async (
     tenant: Omit<Tenant, "id" | "createdAt"> | Tenant
   ) => {
-    if (!("id" in tenant)) {
-      await addTenant(tenant);
-    } else {
+    if (tenant && "id" in tenant && tenant.id) {
       await updateTenant(tenant as Tenant);
+    } else {
+      await addTenant(tenant as Omit<Tenant, "id" | "createdAt">);
     }
     closeModal();
   };
-  
+
   const addTenant = async (tenant: Omit<Tenant, "id" | "createdAt">) => {
     try {
       const response = await fetch(API_URL, {
@@ -102,7 +101,7 @@ const TenantTable = () => {
       console.error("Error adding tenant:", error);
     }
   };
-  
+
   const updateTenant = async (tenant: Tenant) => {
     try {
       const response = await fetch(`${API_URL}/${tenant.id}`, {
@@ -114,12 +113,14 @@ const TenantTable = () => {
         setTenants((prev) =>
           prev.map((t) => (t.id === tenant.id ? tenant : t))
         );
+      } else {
+        console.error("Failed to update tenant:", response.statusText);
       }
     } catch (error) {
       console.error("Error updating tenant:", error);
     }
   };
-  
+
   const deleteTenant = async (id: number) => {
     try {
       const response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
@@ -130,7 +131,7 @@ const TenantTable = () => {
       console.error("Error deleting tenant:", error);
     }
   };
-  
+
   return (
     <div className={styles.container}>
       <div className={styles.tableContainer}>
